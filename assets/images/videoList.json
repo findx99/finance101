@@ -1,0 +1,26 @@
+[
+   {
+    "id" : 1,
+    "path" : "assets/videos/mutual_1.mp4",
+     "type" : "video",
+     "title" : "What are mutual Fund?"
+  },
+   {
+     "id" : 2,
+     "path" : "assets/videos/mutual_2.mp4",
+     "type" : "video",
+     "title" : "How To invest in mutual fund"
+   },
+   {
+     "id" : 3,
+     "path" : "assets/videos/mutual_3.mp4",
+     "type" : "video",
+     "title" : "Some random title"
+   },
+   {
+     "id" : 4,
+     "path" : "assets/videos/mutual_4.mp4",
+     "type" : "video",
+     "title" : "Another random title"
+   }
+]

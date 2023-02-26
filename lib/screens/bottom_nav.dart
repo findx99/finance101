@@ -1,3 +1,5 @@
+import 'package:finance101/screens/Profile.dart';
+import 'package:finance101/screens/community_screen.dart';
 import 'package:finance101/screens/learn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +18,9 @@ class BottomNavState extends State<BottomNav> {
   int currentIdx = 0;
   List screens = [
     Home(),
-    Learn()
+    Learn(),
+    CommunityScreen(),
+    ProfileScreen(),
   ];
 
   @override

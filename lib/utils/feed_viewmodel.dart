@@ -15,7 +15,7 @@ class FeedViewModel extends BaseViewModel{
 
   FeedViewModel() {
     videoSource = VideosAPI();
-    print(videoSource);
+    print("video list ${videoSource?.listVideos}");
   }
 
   changeVideo(index) async {

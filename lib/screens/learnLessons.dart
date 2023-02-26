@@ -29,25 +29,81 @@ class LearnLessons extends StatelessWidget {
             ),
           ),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              width: 250,
-              height: 250,
-              color: Colors.orange,
-              child: Card(
-                child: Column(children: [
-                  Text("Complete this module & Earn 10 Coins"),
-                  Text("Mutual Fund 101"),
-                  Text("Learn the basics of mutual fund to start your investing journey..."),
-                  OutlinedButton(onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => FeedScreen()));
-                  }, child:Text("Start"))
-                ]),
-              ),
-            )
-          ],
+        body: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
+          child: Column(
+            children: [
+              Container(
+                height: 220,
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(children: [
+                      Row(
+                        children: [
+                          Container(
+                            color: Colors.yellow,
+                            padding: EdgeInsets.fromLTRB(5,3,5,3),
+                            child: Text("complete this & Earn 10 Coins",
+                                style:  TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                  color: Colors.grey.shade700,
+                            )),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 14,),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Mutual Fund 101", style:  TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w500
+                          ),),
+                          SizedBox(height: 10,),
+                          Text("Learn the basics of mutual fund to start your investing journey",
+                              style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400
+                          )),
+                        ],
+                      ),
+                    SizedBox(height: 15,),
+                    OutlinedButton(
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => FeedScreen()));
+                        },
+                        style: OutlinedButton.styleFrom(
+                            side: BorderSide.none,
+                            backgroundColor: Color.fromRGBO(50, 205, 50, 1),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Start",
+                              style: GoogleFonts.robotoSlab(
+                                  color: Colors.white, fontSize: 13),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(5, 3, 0, 0),
+                              child: Icon(
+                                Icons.arrow_forward,
+                                color: Colors.white,
+                                size: 15,
+                              ),
+                            )
+                          ],
+                        ))
+                    ]),
+                  ),
+                ),
+              )
+            ],
+          ),
         ));
   }
 }

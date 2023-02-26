@@ -1,4 +1,4 @@
-
+import 'package:finance101/main.dart';
 import 'package:finance101/utils/feed_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,19 +8,19 @@ import 'package:stacked/stacked.dart';
 import 'package:video_player/video_player.dart';
 
 import '../utils/video.dart';
+import '../utils/videoDescription.dart';
 
-class FeedScreen extends StatefulWidget{
-
+class FeedScreen extends StatefulWidget {
   @override
   _FeedScreenState createState() => _FeedScreenState();
 }
 
-class _FeedScreenState extends State<FeedScreen>{
+class _FeedScreenState extends State<FeedScreen> {
   final locator = GetIt.instance;
   final feedViewModel = GetIt.instance<FeedViewModel>();
 
   @override
-  void initState(){
+  void initState() {
     feedViewModel.loadVideo(0);
     feedViewModel.loadVideo(1);
 
@@ -37,13 +37,23 @@ class _FeedScreenState extends State<FeedScreen>{
 
   Widget videoScreen() {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black.withOpacity(0.2),
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       backgroundColor: GetIt.instance<FeedViewModel>().actualScreen == 0
           ? Colors.black
           : Colors.white,
       body: Stack(
         children: [
           PageView.builder(
-            itemCount: 2,
+            itemCount: 1,
             onPageChanged: (value) {
               print(value);
               if (value == 1)
@@ -87,40 +97,10 @@ class _FeedScreenState extends State<FeedScreen>{
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
             index = index % (feedViewModel.videoSource!.listVideos.length);
-            return videoCard(feedViewModel.videoSource!.listVideos[index]);
+            return videoCard(feedViewModel.videoSource!.listVideos[index],
+                feedViewModel.videoSource!.listVideos[index].title);
           },
-        ),
-        SafeArea(
-          child: Container(
-            padding: EdgeInsets.only(top: 20),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text('Following',
-                      style: TextStyle(
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.white70)),
-                  SizedBox(
-                    width: 7,
-                  ),
-                  Container(
-                    color: Colors.white70,
-                    height: 10,
-                    width: 1.0,
-                  ),
-                  SizedBox(
-                    width: 7,
-                  ),
-                  Text('For You',
-                      style: TextStyle(
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white))
-                ]),
-          ),
-        ),
+        )
       ],
     );
   }
@@ -134,32 +114,44 @@ class _FeedScreenState extends State<FeedScreen>{
     }
   }
 
-  Widget videoCard(Video video) {
+  Widget videoCard(Video video, String title) {
     return Stack(
       children: [
         video.controller != null
             ? GestureDetector(
-          onTap: () {
-            if (video.controller!.value.isPlaying) {
-              video.controller?.pause();
-            } else {
-              video.controller?.play();
-            }
-          },
-          child: SizedBox.expand(
-              child: FittedBox(
-                fit: BoxFit.cover,
-                child: SizedBox(
-                  width: video.controller?.value.size.width ?? 0,
-                  height: video.controller?.value.size.height ?? 0,
-                  child: VideoPlayer(video.controller!),
-                ),
-              )),
-        )
+                onTap: () {
+                  if (video.controller!.value.isPlaying) {
+                    setState(() {
+                      video.controller?.pause();
+                    });
+                  } else {
+                    setState(() {
+                      video.controller?.play();
+                    });
+                  }
+                },
+                child: SizedBox.expand(
+                    child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: SizedBox(
+                      width: video.controller?.value.size.width ?? 0,
+                      height: video.controller?.value.size.height ?? 0,
+                      child: VideoPlayer(video.controller!)
+    ),
+                )),
+              )
             : Container(
-          color: Colors.black,
-          child: Center(
-            child: Text("Loading"),
+                color: Colors.black,
+                child: Center(
+                  child: Text("Loading..."),
+                ),
+              ),
+        Center(
+          child: Container(
+            width: 50,
+            height: 50,
+            color: Colors.white70,
+            child: video.controller!.value.isPlaying ? Icon(Icons.pause_circle, size: 50,) : Icon(Icons.play_arrow, size: 50,),
           ),
         ),
         Column(
@@ -169,10 +161,9 @@ class _FeedScreenState extends State<FeedScreen>{
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                Text("Hello"),
+                VideoDescription(title),
               ],
             ),
-            SizedBox(height: 20)
           ],
         ),
       ],
